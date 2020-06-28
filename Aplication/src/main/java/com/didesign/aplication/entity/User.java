@@ -19,7 +19,7 @@ import javax.persistence.JoinColumn;
 @Entity
 public class User implements Serializable{
 
-	private static final long serialVersionUID = -6833167247955613395L;
+	private static final long serialVersionUID = 392923782166376943L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO, generator="native")
@@ -44,7 +44,7 @@ public class User implements Serializable{
 	@JoinTable(name="user_roles"
 		,joinColumns=@JoinColumn(name="user_id")
 		,inverseJoinColumns=@JoinColumn(name="role_id"))
-	private Set roles;
+	private Set<Role> roles;
 	
 	public User() {	}
 	
@@ -108,11 +108,11 @@ public class User implements Serializable{
 		this.confirmPassword = confirmPassword;
 	}
 
-	public Set getRoles() {
+	public Set<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(Set roles) {
+	public void setRoles(Set <Role> roles) {
 		this.roles = roles;
 	}
 
