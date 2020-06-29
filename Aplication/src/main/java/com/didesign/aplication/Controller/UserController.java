@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.didesign.aplication.entity.User;
+import com.didesign.aplication.repository.RoleRepository;
 import com.didesign.aplication.service.UserService;
 
 @Controller
@@ -14,6 +15,9 @@ public class UserController {
 	@Autowired
 	UserService userService;
 	
+	@Autowired
+	RoleRepository roleRepository;
+	
 	@GetMapping("/")
 	public String index() {
 		return "index";
@@ -21,7 +25,10 @@ public class UserController {
 	
 	@GetMapping("/userForm")
 	public String getUserForm(Model model) {
+		model.addAttribute("userForm", new User());
 		model.addAttribute("userList", userService.getAllUsers());
+		model.addAttribute("roles",roleRepository.findAll());
+		model.addAttribute("listTab","active");
 		
 		return "user-form/user-view";
 	}
