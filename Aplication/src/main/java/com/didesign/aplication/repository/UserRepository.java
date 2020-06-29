@@ -1,6 +1,7 @@
 package com.didesign.aplication.repository;
 
 
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.data.repository.CrudRepository;
@@ -11,6 +12,6 @@ import com.didesign.aplication.entity.User;
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
 
-	public Set<User> findByUsername(String username);
+	public Optional<User> findByUsername(String username);
 
 }

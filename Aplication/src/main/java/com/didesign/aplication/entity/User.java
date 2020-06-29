@@ -12,7 +12,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 import org.hibernate.annotations.GenericGenerator;
+
+import com.sun.istack.NotNull;
 
 import javax.persistence.JoinColumn;
 
@@ -26,18 +32,39 @@ public class User implements Serializable{
 	@GenericGenerator(name="native",strategy="native")
 	private Long id;
 	
-	@Column 
+	@Column
+	@NotBlank
+	@NotNull
+	@NotEmpty(message = "Los nombres son  requeridos")
+	@Size(min=2, message="Los nombres deben tener más de un caracter")
 	private String firstName;
 	@Column 
+	@NotBlank
+	@NotNull
+	@NotEmpty(message = "Los apellidos son  requeridos")
+	@Size(min=2, message="Los apellidos deben tener más de un caracter")
 	private String lastName;
 	@Column(unique = true) 
+	@NotBlank
+	@NotNull
+	@NotEmpty(message = "El correo electrónico es requerido")
 	private String email;
 	@Column(unique = true) 
+	@NotBlank
+	@NotNull
+	@NotEmpty(message = "El nombre de usuario es requerido")
+	@Size(min=2, message="El nombre de usuario debe tener más de un caracter")
 	private String username;
 	@Column
+	@NotBlank
+	@NotNull
+	@NotEmpty
 	private String password;
 	
 	@Transient 
+	@NotBlank
+	@NotNull
+	@NotEmpty
 	private String confirmPassword;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
