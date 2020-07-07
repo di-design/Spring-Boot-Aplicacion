@@ -1,5 +1,4 @@
 package com.didesign.aplication.Controller;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,7 @@ import com.didesign.aplication.service.UserService;
 
 @Controller
 public class UserController {
-	
+
 	@Autowired
 	UserService userService;
 	
@@ -30,38 +29,32 @@ public class UserController {
 	}
 	
 	@GetMapping("/userForm")
-	public String getUserForm(Model model) {
+	public String userForm(Model model) {
 		model.addAttribute("userForm", new User());
 		model.addAttribute("userList", userService.getAllUsers());
 		model.addAttribute("roles",roleRepository.findAll());
 		model.addAttribute("listTab","active");
-		
 		return "user-form/user-view";
 	}
 	
 	@PostMapping("/userForm")
-	public String createUser(@Valid @ModelAttribute("userForm")User user, BindingResult result, ModelMap model) {
-		
-		if(result.hasErrors()) {
-			model.addAttribute("userForm", user);
-			model.addAttribute("formTab","active");
-		}else {
-			try {
-				userService.createUser(user);
-			} catch (Exception e) {
-				model.addAttribute("formErrorMessage", e.getMessage());
+	public String postUserForm(@Valid @ModelAttribute("userForm")User user, BindingResult result, ModelMap model) {
+			if(result.hasErrors()) {
 				model.addAttribute("userForm", user);
 				model.addAttribute("formTab","active");
-				model.addAttribute("userList", userService.getAllUsers());
-				model.addAttribute("roles",roleRepository.findAll());
+			}else {
+				try {
+					userService.createUser(user);
+					model.addAttribute("userForm", new User());
+					model.addAttribute("listTab","active");
+				} catch (Exception e) {
+					model.addAttribute("formError",e.getMessage());
+					model.addAttribute("userForm", user);
+					model.addAttribute("formTab","active");
+				}
 			}
+			model.addAttribute("userList", userService.getAllUsers());
+			model.addAttribute("roles",roleRepository.findAll());
+			return "user-form/user-view";
 		}
-		
-		model.addAttribute("userList", userService.getAllUsers());
-		model.addAttribute("roles",roleRepository.findAll());
-		
-		return "user-form/user-view";
-		
-	}
-
 }

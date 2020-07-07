@@ -1,7 +1,5 @@
 package com.didesign.aplication.service;
 
-import javax.validation.Valid;
-
 import com.didesign.aplication.entity.User;
 
 public interface UserService {
